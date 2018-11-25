@@ -34,13 +34,11 @@ namespace SWProjv1
             if (UserType == 0)
             {
                 Student student = new Student();
-                student.name = "Plain Old Student";
                 this.NavigationService.Navigate(new StudentHome(student));
             }
             else if (UserType == 1)
             {
                 RA ra = new RA();
-                ra.name = "Fancy RA";
                 this.NavigationService.Navigate(new StudentHome(ra));
             }
             else if (UserType == 2)

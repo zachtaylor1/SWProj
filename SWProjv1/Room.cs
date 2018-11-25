@@ -11,6 +11,7 @@ namespace SWProjv1
 {
     class Room
     {
+        public static Room selectedRoom { get; set; }
         public String roomNum { get; set; }
         public String roomSide { get; set; }
         public String building { get; set; }
@@ -18,6 +19,8 @@ namespace SWProjv1
         public String mailing { get; set; }
         public String roomID { get; set; }
         public ListBoxItem listboxitem;
+        public Grid grid;
+        //public TextBox textBox;
         public Room(String roomID, String roomSide, String building, String phoneNumber, String mailing, String roomNum)
         {
             this.roomID = roomID;
@@ -26,11 +29,22 @@ namespace SWProjv1
             this.building = building;
             this.phoneNumber = phoneNumber;
             this.mailing = mailing;
+            grid = new Grid();
+            grid.RowDefinitions.Add(new RowDefinition());
+            grid.RowDefinitions.Add(new RowDefinition());
+            grid.ColumnDefinitions.Add(new ColumnDefinition());
+            grid.ColumnDefinitions.Add(new ColumnDefinition());
+            TextBox textBox = new TextBox();
+            textBox.Text = roomNum + roomSide + " " + building + "\nPhone Number: " + phoneNumber + "\nMailing Address: " + mailing;
+            Grid.SetRow(textBox, 0);
+            Grid.SetColumn(textBox, 0);
+            grid.Children.Add(textBox);
         }
 
         private void Item_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-
+            selectedRoom = new Room(roomID, roomSide, building, phoneNumber, mailing, roomNum);
+            selectedRoom.grid = grid;
         }
 
         public void setListBoxItem()
@@ -39,6 +53,5 @@ namespace SWProjv1
             listboxitem.Content = roomNum + roomSide + " " + building;
             listboxitem.PreviewMouseDown += Item_PreviewMouseDown;
         }
-
     }
 }

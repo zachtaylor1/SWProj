@@ -8,7 +8,7 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="SearchPage">
 
-    <Grid Background="#FFE5E5E5">
+    <Grid Background="#FFE5E5E5" Name="grid">
         <Grid.RowDefinitions>
             <RowDefinition Height="0.05*"/>
             <RowDefinition Height="0.1*"/>
@@ -23,8 +23,8 @@
         <TextBox Grid.Row="1"/>
         <Button Name="search_btn" Content="Search" Click="search_btn_Click" Grid.Row="2"/>
         <ListBox Name="searchItems" Grid.Row="3"/>
-        <Grid Name="searchItem" Grid.Row="3" Grid.Column="1">
-            <TextBlock Name="searchText_test" Visibility="Hidden"/>
-        </Grid>
+        <!--Grid Name="searchItem" Grid.Row="3" Grid.Column="1">
+            <TextBlock Name="searchText_test" Text="BBBBB"/>
+        </-->
     </Grid>
 </Page>

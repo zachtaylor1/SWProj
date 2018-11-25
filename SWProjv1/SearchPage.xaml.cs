@@ -41,12 +41,43 @@ namespace SWProjv1
             try
             {
                 Server.setCommand(type, "");
-                searchItems.ItemsSource = Server.runQuery("SWProjv1." + type);
+                List<ListBoxItem> listy = Server.runQuery("SWProjv1." + type);
+                foreach (ListBoxItem lbi in listy)
+                {
+                    lbi.PreviewMouseDown += Item_PreviewMouseDown2;
+                }
+                searchItems.ItemsSource = listy;
             }
             catch (Exception exceptyone)
             {
-                searchText_test.Text = exceptyone.ToString();
+                //searchText_test.Text = exceptyone.ToString();
             }
+        }
+
+        private void Item_PreviewMouseDown2(object sender, MouseButtonEventArgs e)
+        {
+            //searchItem = Room.selectedRoom.grid;
+            //searchItem.Visibility=Visibility.Visible;
+            try
+            {
+                Grid searchItem;
+                switch (type)
+                {
+                    case "Room":
+                        searchItem = Room.selectedRoom.grid;
+                        break;
+                    case "Student":
+                        searchItem = Student.selectedStudent.grid;
+                        break;
+                    default:
+                        searchItem = new Grid();
+                        break;
+                }
+                Grid.SetColumn(searchItem, 1);
+                Grid.SetRow(searchItem, 3);
+                grid.Children.Add(searchItem);
+            }
+            catch (Exception) { }
         }
     }
 }

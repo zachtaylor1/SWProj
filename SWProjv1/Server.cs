@@ -29,7 +29,10 @@ namespace SWProjv1
         }
         public static void setCommand(String type, String searchTerm)
         {
-            command.CommandText = "SELECT * FROM " + type;
+            if (type.Equals("Room"))
+                command.CommandText = "SELECT * FROM " + type;
+            else if (type.Equals("Student"))
+                command.CommandText = "SELECT * FROM Student, User_T WHERE Student.UserID = User_T.UserID";
         }
 
         public static List<ListBoxItem> runQuery(String type)
@@ -62,7 +65,9 @@ namespace SWProjv1
                         results.Add(room.listboxitem);
                         break;
                     case "SWProjv1.Student":
-                        Student stu = new Student();
+                        Student student = new Student(
+                                
+                            );
                         break;
                 }
             }
