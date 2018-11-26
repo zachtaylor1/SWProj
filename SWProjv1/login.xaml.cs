@@ -20,34 +20,29 @@ namespace SWProjv1
     /// </summary>
     public partial class login : Page
     {
-        Student student;
         public login()
         {
             InitializeComponent();
-            student = new Student();
         }
-
-        private void login_btn_Click(object sender, RoutedEventArgs e)
+        public void login_btn_Click(object sender, RoutedEventArgs e)
         {
-            User user = new User();
-            int UserType = user.VerifyLogin(username_inp.Text);
-            if (UserType == 0)
+            int UserType = Server.LogInQuery(username_inp.Text, password_inp.Text);
+            if (UserType == 1)//Student
             {
                 Student student = new Student();
                 this.NavigationService.Navigate(new StudentHome(student));
             }
-            else if (UserType == 1)
-            {
+            else if (UserType == 3)
+            {//RA
                 RA ra = new RA();
                 this.NavigationService.Navigate(new StudentHome(ra));
             }
             else if (UserType == 2)
-            {
-                Admin admin = new Admin();
+            {//Admin
                 this.NavigationService.Navigate(new AdminHome());
             }
             else
-            {
+            {//Error
                 String errorTitle = "Login Error";
                 String errorMessage = "Login Error :(";
                 MessageBox.Show(errorTitle, errorMessage);
@@ -70,5 +65,6 @@ namespace SWProjv1
             String mbMessage = "Message another department to become a registered student";
             MessageBox.Show(mbMessage, mbTitle);
         }
+
     }
 }

@@ -74,5 +74,27 @@ namespace SWProjv1
             reader.Close();
             return results;
         }
+        public static int LogInQuery(String username, String password)//////////////////////////////////////////////
+        {
+            Init();
+            command.CommandText = "LogInProc";
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            command.Parameters.Add(new SqlParameter("@uname", username));
+            command.Parameters.Add(new SqlParameter("@pword", password));
+            command.Parameters.Add(new SqlParameter("@result", System.Data.SqlDbType.Int)).Direction = System.Data.ParameterDirection.Output;
+            command.ExecuteNonQuery();
+            int result = Convert.ToInt32(command.Parameters["@result"].Value);
+            return result;
+        }
+        public static SqlDataReader run_query(String commandtext)
+        {
+            SqlCommand cmd = new SqlCommand(commandtext, sql);
+            return cmd.ExecuteReader();
+        }
+        public static void Executer(String command)
+        {
+            SqlCommand cmd = new SqlCommand(command, sql);
+            cmd.ExecuteNonQuery();
+        }
     }
 }

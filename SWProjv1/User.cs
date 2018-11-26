@@ -28,13 +28,5 @@ namespace SWProjv1
             this.password = password;
             this.DOB = DOB;
         }
-
-        public int VerifyLogin(String username)
-        {
-            if (username.Equals("student")) return 0;
-            else if (username.Equals("RA") || username.Equals("ra")) return 1;
-            else if (username.Equals("admin")) return 2;
-            else return 10;
-        }
     }
 }
