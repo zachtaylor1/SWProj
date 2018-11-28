@@ -6,7 +6,6 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="StudentHome">
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="0.1*"/>
@@ -20,8 +19,25 @@
             <Button Name="KeyReview_btn" Content="View Key Requests" Click="KeyReview_btn_Click" Visibility="Hidden"/>
             <TextBlock Name="test"/>
         </DockPanel>
-        <Grid Grid.Row="1">
-            
+        <Grid Grid.Row="1" Name="CenterGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"></RowDefinition>
+                <RowDefinition Height="50"></RowDefinition>
+                <RowDefinition Height="50"></RowDefinition>
+                <RowDefinition Height="50"></RowDefinition>
+                <RowDefinition Height="50"></RowDefinition>
+                <RowDefinition Height="50"></RowDefinition>
+                <RowDefinition Height="50"></RowDefinition>
+                <RowDefinition Height="50"></RowDefinition>
+            </Grid.RowDefinitions>
+            <TextBlock Name="tb1" Grid.Row="0" Text="" HorizontalAlignment="Center"/>
+            <TextBlock Name="tb2" Grid.Row="1" Text="" HorizontalAlignment="Center"/>
+            <TextBlock Name="tb3" Grid.Row="2" Text="" HorizontalAlignment="Center"/>
+            <TextBlock Name="tb4" Grid.Row="3" Text="" HorizontalAlignment="Center"/>
+            <TextBlock Name="tb5" Grid.Row="4" Text="" HorizontalAlignment="Center"/>
+            <TextBlock Name="tb6" Grid.Row="5" Text="" HorizontalAlignment="Center"/>
+            <TextBlock Name="tb7" Grid.Row="6" Text="" HorizontalAlignment="Center"/>
+            <TextBlock Name="tb8" Grid.Row="7" Text="" HorizontalAlignment="Center"/>
         </Grid>
     </Grid>
 </Page>

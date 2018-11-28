@@ -12,7 +12,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
 namespace SWProjv1
 {
     /// <summary>
@@ -30,6 +29,8 @@ namespace SWProjv1
             if (UserType == 1)//Student
             {
                 Student student = new Student();
+                student.username = username_inp.Text;
+                student.password = password_inp.Text;
                 this.NavigationService.Navigate(new StudentHome(student));
             }
             else if (UserType == 3)
@@ -39,7 +40,10 @@ namespace SWProjv1
             }
             else if (UserType == 2)
             {//Admin
-                this.NavigationService.Navigate(new AdminHome());
+                Admin admin = new Admin();
+                admin.username = username_inp.Text;
+                admin.password = password_inp.Text;
+                this.NavigationService.Navigate(new AdminHome(admin));
             }
             else
             {//Error
@@ -48,23 +52,19 @@ namespace SWProjv1
                 MessageBox.Show(errorTitle, errorMessage);
             }
         }
-
         private void HelpLogin_btn_MouseEnter(object sender, MouseEventArgs e)
         {
             HelpLogin_txt.TextDecorations = TextDecorations.Underline;
         }
-
         private void HelpLogin_btn_MouseLeave(object sender, MouseEventArgs e)
         {
             HelpLogin_txt.TextDecorations = null;
         }
-
         private void HelpLogin_btn_Click(object sender, RoutedEventArgs e)
         {
             String mbTitle = "Get Help";
             String mbMessage = "Message another department to become a registered student";
             MessageBox.Show(mbMessage, mbTitle);
         }
-
     }
 }

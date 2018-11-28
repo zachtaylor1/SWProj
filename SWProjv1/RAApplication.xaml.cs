@@ -33,6 +33,7 @@ namespace SWProjv1
             {
                 mbTitle = "Success!";
                 mbMessage = "Application Successful! :)";
+                Server.Executer("EXEC NewRAApplication '" + stdNum_inp.Text + "'");
             }
             else
             {

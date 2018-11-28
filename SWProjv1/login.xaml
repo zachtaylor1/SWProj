@@ -7,7 +7,6 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="login">
-
     <Grid Name="grid" Background="#FFE5E5E5">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -26,21 +25,20 @@
                 <TextBlock IsHitTestVisible="False" Text="GenericUsername" Foreground="LightGray" FontSize="16" MaxWidth="250">
                     <TextBlock.Style>
                         <Style TargetType="{x:Type TextBlock}">
-                        <Setter Property="Visibility" Value="Collapsed"/>
+                            <Setter Property="Visibility" Value="Collapsed"/>
                             <Style.Triggers>
                                 <MultiDataTrigger>
-                                        <MultiDataTrigger.Conditions>
+                                    <MultiDataTrigger.Conditions>
                                         <Condition Binding="{Binding ElementName=username_inp, Path=IsKeyboardFocused}" Value="False"/>
                                         <Condition Binding="{Binding ElementName=username_inp, Path=Text}" Value=""/>
-                                        </MultiDataTrigger.Conditions>
-                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="Visibility" Value="Visible"/>
                                 </MultiDataTrigger>
                             </Style.Triggers>
                         </Style>
                     </TextBlock.Style>
                 </TextBlock>
             </Grid>
-
             <TextBlock Text="Password" Padding="10" HorizontalAlignment="Center"/>
             <Grid>
                 <TextBox Name="password_inp" MaxLength="23" MinWidth="227" MaxWidth="250" FontSize="16"/>
@@ -61,7 +59,6 @@
                     </TextBlock.Style>
                 </TextBlock>
             </Grid>
-
             <Button Name="login_btn" Content="Log In" Margin="20" HorizontalAlignment="Center" Click="login_btn_Click"/>
             <Button Name="HelpLogin_btn" Background="#FFE5E5E5" BorderThickness="0" Foreground="Blue" HorizontalAlignment="Center" Click="HelpLogin_btn_Click" MouseEnter="HelpLogin_btn_MouseEnter" MouseLeave="HelpLogin_btn_MouseLeave">
                 <TextBlock Name="HelpLogin_txt" Text="Having trouble logging in?"/>

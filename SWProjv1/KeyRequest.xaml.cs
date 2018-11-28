@@ -33,6 +33,7 @@ namespace SWProjv1
             {
                 mbTitle = "Success!";
                 mbMessage = "Request Submitted";
+                Server.Executer("EXEC SendTempKeyRequest '" + name_inp.Text + "', '" + stdNum_inp.Text + "', '" + building_inp.Text + "', '" + room_inp.Text + "', 'N/A' ");
             }
             else
             {
