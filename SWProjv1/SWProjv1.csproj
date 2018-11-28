@@ -58,6 +58,8 @@
     <Compile Include="AdminHome.xaml.cs">
       <DependentUpon>AdminHome.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Audit.cs" />
+    <Compile Include="AuditData.cs" />
     <Compile Include="Furniture.cs" />
     <Compile Include="KeyRequest.xaml.cs">
       <DependentUpon>KeyRequest.xaml</DependentUpon>

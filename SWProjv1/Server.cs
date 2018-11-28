@@ -31,18 +31,20 @@ namespace SWProjv1
         public static void setCommand(String type, String searchTerm)
         {
             if (type.Equals("Room"))
-                command.CommandText = "SELECT * FROM " + type;
+                command.CommandText = "SELECT * FROM Room WHERE (building LIKE '" + searchTerm + "%' OR buildingLocation LIKE '" + searchTerm + "%')";
             else if (type.Equals("Student"))
-                command.CommandText = "SELECT * FROM Student, User_T WHERE Student.UserID = User_T.UserID AND Student.userID= Student.studentID";
+                command.CommandText = "SELECT * FROM Student, User_T WHERE Student.UserID = User_T.UserID AND Student.userID= Student.studentID AND (User_T.firstName LIKE '" + searchTerm + "%' OR lastName LIKE '" + searchTerm + "%' OR studentID like '" + searchTerm + "%')";
             else if (type.Equals("Message"))
-                command.CommandText = "SELECT * FROM Message, User_T WHERE messageAcknowledge = 0 AND recieverUserID = '" + User.userID + "' AND USer_T.userID = '" + User.userID + "'";
+                command.CommandText = "SELECT * FROM Message, User_T WHERE messageAcknowledge = 0 AND recieverUserID = '" + User.userID + "' AND USer_T.userID = '" + User.userID + "' AND (User_T.firstName LIKE '" + searchTerm + "%' OR lastName LIKE '" + searchTerm + "%')";
             //command.CommandText = "SELECT * FROM Message, User_T WHERE messageAcknowledge = 0 AND recieverUserID IN (SELECT recieverUserID FROM Message, Admin WHERE recieverUserID=userID)  AND user_T.userID=Message.senderUserID;";
             else if (type.Equals("Key"))
-                command.CommandText = "SELECT * FROM Message, User_T, Student WHERE recieverUserID = '000000000000000' AND messageAcknowledge = '0' AND senderUserID = User_T.userID AND Student.userID = Message.senderUserID;";
+                command.CommandText = "SELECT * FROM Message, User_T, Student WHERE recieverUserID = '000000000000000' AND messageAcknowledge = '0' AND senderUserID = User_T.userID AND Student.userID = Message.senderUserID AND (User_T.firstName LIKE '" + searchTerm + "%' OR lastName LIKE '" + searchTerm + "%')";
             else if (type.Equals("RA Application"))
-                command.CommandText = "select * from RAApplication,Student,User_T where isAcknowledged = 0 AND RAApplication.studentID = Student.studentID AND Student.userID = User_T.userID";
+                command.CommandText = "select * from RAApplication,Student,User_T where isAcknowledged = 0 AND RAApplication.studentID = Student.studentID AND Student.userID = User_T.userID AND (User_T.firstName LIKE '" + searchTerm + "%' OR lastName LIKE '" + searchTerm + "%')";
             else if (type.Equals("Furniture"))
-                command.CommandText = "SELECT * FROM Furniture WHERE RoomID LIKE '" + searchTerm+"'";
+                command.CommandText = "SELECT * FROM Furniture WHERE RoomID LIKE '" + searchTerm + "'";
+            else if (type.Equals("Audit"))
+                command.CommandText = "SELECT * FROM Audit";
             else
                 command.CommandText = "SELECT 'Uh oh!'";
         }
@@ -123,7 +125,14 @@ namespace SWProjv1
                             );
                         key.setListBoxItem();
                         results.Add(key.listboxitem);
-
+                        break;
+                    case "SWProjv1.Audit":
+                        Audit audit = new Audit(
+                            reader.GetString(1).Trim(),
+                            reader.GetString(2).Trim()
+                        );
+                        audit.setListBoxItem();
+                        results.Add(audit.listboxitem);
                         break;
                     default:
                         break;
@@ -134,7 +143,6 @@ namespace SWProjv1
         }
         public static void Executer(String command)
         {
-
             SqlCommand cmd = new SqlCommand(command, sql);
             cmd.ExecuteNonQuery();
         }
@@ -209,21 +217,52 @@ namespace SWProjv1
             return command.CommandText;
         }
 
-        public static List<List<String>> getRoomHistory(String roomID)
+        public static List<ListBoxItem> getRoomHistory(String roomID)
         {
             command.CommandText = "SELECT * FROM RoomHistory, Student, User_T WHERE RoomHistory.studentID = Student.studentID AND Student.userID = User_t.userID AND RoomHistory.RoomID = " + roomID;
             SqlDataReader reader = command.ExecuteReader();
-            List<List<String>> ll = new List<List<String>>();
+            List<ListBoxItem> ll = new List<ListBoxItem>();
             while (reader.Read())
             {
-                List<String> l = new List<String>();
-                l.Add(reader.GetString(11).Trim()+" "+ reader.GetString(12).Trim()+" "+ reader.GetString(13).Trim());
-                l.Add(reader.GetString(1).Trim());
-                l.Add(reader.GetDateTime(2).ToString());
-                l.Add(reader.GetDateTime(3).ToString());
-                ll.Add(l);
+                ListBoxItem item = new ListBoxItem();
+                String s = reader.GetString(11).Trim()+" "+ reader.GetString(12).Trim();
+                s+="    "+reader.GetString(1).Trim();
+                s+="    "+reader.GetDateTime(2).ToString();
+                s+="    "+reader.GetDateTime(3).ToString();
+                item.Content = s;
+                ll.Add(item);
             }
             return ll;
+        }
+
+        public static void delFurniture(String serialNum)
+        {
+            command.CommandText = "DELETE FROM Furniture WHERE serialNumber = " + serialNum;
+            command.ExecuteNonQuery();
+        }
+
+        public static void addFurniture(String roomID, String serialNum, String name)
+        {
+            command.CommandText = "EXEC FurnitureAdd '" + roomID + "', '" + name + "', " + serialNum;//"INSERT INTO Furniture VALUES (" + roomID + "," + serialNum + "," + name + ")";
+            command.ExecuteNonQuery();
+        }
+
+        public static String getRoommateName(String roommateID)
+        {
+            command.CommandText = "SELECT * FROM Student, User_T WHERE Student.UserID = User_T.UserID AND Student.userID= Student.studentID AND Student.studentID = " + roommateID;
+            SqlDataReader reader = command.ExecuteReader();
+            String s="";
+            while (reader.Read())
+            {
+                s = reader.GetString(7).Trim() + " " + reader.GetString(9).Trim() + " " + reader.GetString(8).Trim();
+            }reader.Close();
+            return s;
+        }
+
+        public static void addAudit(String title, String description)
+        {
+            SqlCommand cmd = new SqlCommand("EXEC addAudit '" + title + "','" + description + "'");
+            cmd.ExecuteNonQuery();
         }
     }
 }

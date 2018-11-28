@@ -51,7 +51,7 @@ namespace SWProjv1
         {
             try
             {
-                Server.setCommand(type, "");
+                Server.setCommand(type, search_txt.Text);
                 List<ListBoxItem> listy = Server.runQuery("SWProjv1." + type);
                 foreach (ListBoxItem lbi in listy)
                 {
@@ -89,6 +89,9 @@ namespace SWProjv1
                         break;
                     case "RA Application":
                         searchItem = RAApplicationData.selectedApplication.grid;
+                        break;
+                    case "Audit":
+                        searchItem = Audit.selectedAudit.grid;
                         break;
                     default:
                         searchItem = new Grid();

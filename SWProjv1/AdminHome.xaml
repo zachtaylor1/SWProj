@@ -12,13 +12,17 @@
             <RowDefinition Height="0.1*"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <DockPanel Name="adminNav">
+        <!--DockPanel Name="adminNav"-->
+        <UniformGrid Columns="7">
             <Button Name="msg_btn" Content="View Messages" Click="msg_btn_Click"/>
             <Button Name="KeyReview_btn" Content="View Key Requests" Click="KeyReview_btn_Click"/>
             <Button Name="roomSearch_btn" Content="Search Rooms" Click="roomSearch_btn_Click"/>
             <Button Name="searchStdnt_btn" Content="Search Students" Click="searchStdnt_btn_Click"/>
-            <Button Name="RAReview_btn" Content="Review RA Applications" Click="RAReview_btn_Click"/>
-            <TextBlock Name="test"/>
-        </DockPanel>
+            <Button Name="RAReview_btn" Click="RAReview_btn_Click">
+                <TextBlock Text="Review RA Applications" TextWrapping="Wrap"/>
+            </Button>
+            <Button Name="audit_btn" Content="View Audits" Click="audit_btn_Click"/>
+                <TextBlock Name="test"/>
+        </UniformGrid>
     </Grid>
 </Page>

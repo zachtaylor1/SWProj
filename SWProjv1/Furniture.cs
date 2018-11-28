@@ -12,7 +12,7 @@ namespace SWProjv1
         public String serialNum { get; set; }
         public String name { get; set; }
         public CheckBox removeMe { get; set; }
-        String roomID;
+        public String roomID { get; set; }
         public Furniture(String serialNum, String name, String roomID)
         {
             this.serialNum = serialNum;

@@ -14,6 +14,7 @@ namespace SWProjv1
     class Room
     {
         public static Room selectedRoom { get; set; }
+        public Furniture selectedFurn;
         public String roomNum { get; set; }
         public String roomSide { get; set; }
         public String building { get; set; }
@@ -25,7 +26,10 @@ namespace SWProjv1
         public Grid grid;
         DockPanel furnGrid;
         DataGrid furniture;
-        //public TextBox textBox;
+        TextBox n_txt;
+        TextBox sn_txt;
+        TabItem history;
+
         public Room(String roomID, String roomSide, String building, String phoneNumber, String mailing, String roomNum)
         {
             this.roomID = roomID;
@@ -44,8 +48,12 @@ namespace SWProjv1
 
         private void Item_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            setGrid();
-            selectedRoom = this;
+            try
+            {
+                setGrid();
+                selectedRoom = this;
+            }
+            catch (InvalidOperationException) { }
         }
 
         public void setListBoxItem()
@@ -105,13 +113,10 @@ namespace SWProjv1
             furniture.Columns.Add(furnitureSN);
 
             scroller.Content = furniture;
-            //Grid.SetColumn(scroller, 0);
-            //furnGrid.Children.Add(scroller);
             furnitures.Content = furnGrid;
             tb.Items.Add(furnitures);
 
             Grid optionInput = new Grid();
-            //Grid.SetColumn(optionInput, 1);
             for (int i = 0; i < 5; i++)
             {
                 RowDefinition rd = new RowDefinition();
@@ -125,7 +130,7 @@ namespace SWProjv1
             n_lbl.VerticalAlignment = VerticalAlignment.Center;
             Grid.SetRow(n_lbl, 0);
 
-            TextBox n_txt = new TextBox();
+            n_txt = new TextBox();
             n_txt.HorizontalAlignment = HorizontalAlignment.Center;
             n_txt.VerticalAlignment = VerticalAlignment.Center;
             n_txt.MinWidth = 100;
@@ -137,7 +142,7 @@ namespace SWProjv1
             sn_lbl.VerticalAlignment = VerticalAlignment.Center;
             Grid.SetRow(sn_lbl, 2);
 
-            TextBox sn_txt = new TextBox();
+            sn_txt = new TextBox();
             sn_txt.HorizontalAlignment = HorizontalAlignment.Center;
             sn_txt.VerticalAlignment = VerticalAlignment.Center;
             sn_txt.MinWidth = 100;
@@ -190,35 +195,42 @@ namespace SWProjv1
             furnGrid.Children.Add(spacer2);
             furnGrid.Children.Add(scroller);
 
-            TabItem history = new TabItem();
+            history = new TabItem();
             history.Header = "Room History";
-            ScrollViewer Hscroller = new ScrollViewer();
-            DataGrid historyGrid = new DataGrid();
-            List<List<String>> ll = Server.getRoomHistory(roomID);
-            historyGrid.ItemsSource = ll;
-            historyGrid.AutoGenerateColumns = false;
-
-            DataTemplate dt = new DataTemplate();
-
-            Hscroller.Content = historyGrid;
-            history.Content = Hscroller;
+            history.PreviewMouseDown += history_MouseDown;
+           
             tb.Items.Add(history);
 
         }
 
-        private void remove_furniture_btn_Click(object sender, RoutedEventArgs e)
+        private void history_MouseDown(object sender, RoutedEventArgs e)
         {
-            
+            ListBox historyList = new ListBox();
+            historyList.ItemsSource = Server.getRoomHistory(roomID);
+            history.Content = historyList;
+        }
+
+            private void remove_furniture_btn_Click(object sender, RoutedEventArgs e)
+        {
+            Server.delFurniture(sn_txt.Text);
+            furniture.Items.Refresh();
         }
 
         private void add_furniture_btn_Click(object sender, RoutedEventArgs e)
         {
-
-        }
-
-        private void move_furniture_btn_Click(object sender, RoutedEventArgs e)
-        {
-
+            try
+            {
+                selectedFurn = new Furniture(sn_txt.Text, n_txt.Text, roomID);
+                Server.addFurniture(selectedFurn.roomID, selectedFurn.serialNum, selectedFurn.name);
+                n_txt.Text = "";
+                sn_txt.Text = "";
+                furniture.Items.Refresh();
+            }
+            catch (Exception)
+            {
+                String mbMessage = "This furniture is already in another room.\nPlease remove it before adding to a new room.";
+                MessageBox.Show(mbMessage);
+            }
         }
 
         public DockPanel GetBasicInfo()

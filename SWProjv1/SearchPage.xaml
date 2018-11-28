@@ -19,7 +19,7 @@
             <ColumnDefinition Width="1.4*"/>
         </Grid.ColumnDefinitions>
         <TextBlock Grid.ColumnSpan="2" Name="type_txt"/>
-        <TextBox Grid.Row="1"/>
+        <TextBox Grid.Row="1" Name="search_txt"/>
         <Button Name="search_btn" Content="Search" Click="search_btn_Click" Grid.Row="2"/>
         <ListBox Name="searchItems" Grid.Row="3"/>
         <Button Name ="CreateButton" Grid.Row="0" Grid.Column="1" Content="New Message" Visibility="Hidden"/>

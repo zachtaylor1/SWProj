@@ -70,5 +70,10 @@ namespace SWProjv1
         {
             this.NavigationService.Navigate(new SearchPage("RA Application"));
         }
+
+        private void audit_btn_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(new SearchPage("Audit"));
+        }
     }
 }
