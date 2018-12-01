@@ -67,7 +67,8 @@ namespace SWProjv1
             Grid.SetColumn(basicInfo, 0);
             grid.Children.Add(basicInfo);
         }
-
+        //query for student history
+        //SELECT * FROM RoomHistory, Student WHERE RoomHistory.studentID = Student.studentID and RoomHistory.studentID=1;
         public DockPanel GetBasicInfo()
         {
             DockPanel basicInfo = new DockPanel();

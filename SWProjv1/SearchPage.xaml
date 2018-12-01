@@ -18,7 +18,7 @@
             <ColumnDefinition/>
             <ColumnDefinition Width="1.4*"/>
         </Grid.ColumnDefinitions>
-        <TextBlock Grid.ColumnSpan="2" Name="type_txt"/>
+        <TextBlock Grid.ColumnSpan="2" Name="type_txt" FontSize="14"/>
         <TextBox Grid.Row="1" Name="search_txt"/>
         <Button Name="search_btn" Content="Search" Click="search_btn_Click" Grid.Row="2"/>
         <ListBox Name="searchItems" Grid.Row="3"/>

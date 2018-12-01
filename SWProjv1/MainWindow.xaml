@@ -5,5 +5,5 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SWProjv1"
         mc:Ignorable="d"
-        Title="V1" Height="450" Width="800" Source="login.xaml">
+        Title="Student Housing System" Height="450" Width="800" Source="login.xaml">
 </NavigationWindow>

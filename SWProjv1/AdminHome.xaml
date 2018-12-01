@@ -22,7 +22,9 @@
                 <TextBlock Text="Review RA Applications" TextWrapping="Wrap"/>
             </Button>
             <Button Name="audit_btn" Content="View Audits" Click="audit_btn_Click"/>
-                <TextBlock Name="test"/>
+            <Button Name="roommate_btn" Click="roommate_btn_Click">
+                <TextBlock Text="Assign Roommates" TextWrapping="Wrap"/>
+            </Button>
         </UniformGrid>
     </Grid>
 </Page>

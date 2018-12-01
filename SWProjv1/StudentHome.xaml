@@ -11,14 +11,15 @@
             <RowDefinition Height="0.1*"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <DockPanel Name="stuNav">
+        <UniformGrid Columns="7" Name="stuNav">
+            
             <Button Name="KeyRequest_btn" Content="Request Temp Key" Click="KeyRequest_btn_Click"/>
             <Button Name="RAapplication_btn" Content="Apply for RA" Click="RAapplication_btn_Click"/>
             <Button Name="resApplication_btn" Content="Apply for Residence" Click="resApplication_btn_Click"/>
             <Button Name="msg_btn" Content="View Messages" Click="msg_btn_Click"/>
             <Button Name="KeyReview_btn" Content="View Key Requests" Click="KeyReview_btn_Click" Visibility="Hidden"/>
             <TextBlock Name="test"/>
-        </DockPanel>
+        </UniformGrid>
         <Grid Grid.Row="1" Name="CenterGrid">
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"></RowDefinition>

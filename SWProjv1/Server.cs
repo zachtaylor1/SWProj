@@ -38,7 +38,7 @@ namespace SWProjv1
                 command.CommandText = "SELECT * FROM Message, User_T WHERE messageAcknowledge = 0 AND recieverUserID = '" + User.userID + "' AND USer_T.userID = '" + User.userID + "' AND (User_T.firstName LIKE '" + searchTerm + "%' OR lastName LIKE '" + searchTerm + "%')";
             //command.CommandText = "SELECT * FROM Message, User_T WHERE messageAcknowledge = 0 AND recieverUserID IN (SELECT recieverUserID FROM Message, Admin WHERE recieverUserID=userID)  AND user_T.userID=Message.senderUserID;";
             else if (type.Equals("Key"))
-                command.CommandText = "SELECT * FROM Message, User_T, Student WHERE recieverUserID = '000000000000000' AND messageAcknowledge = '0' AND senderUserID = User_T.userID AND Student.userID = Message.senderUserID AND (User_T.firstName LIKE '" + searchTerm + "%' OR lastName LIKE '" + searchTerm + "%')";
+                command.CommandText = "SELECT * FROM Message, User_T, Student, Room WHERE recieverUserID = '000000000000000' AND Student.roomID=Room.RoomID AND messageAcknowledge = '0' AND senderUserID = User_T.userID AND Student.userID = Message.senderUserID AND (User_T.firstName LIKE '" + searchTerm + "%' OR lastName LIKE '" + searchTerm + "%')";
             else if (type.Equals("RA Application"))
                 command.CommandText = "select * from RAApplication,Student,User_T where isAcknowledged = 0 AND RAApplication.studentID = Student.studentID AND Student.userID = User_T.userID AND (User_T.firstName LIKE '" + searchTerm + "%' OR lastName LIKE '" + searchTerm + "%')";
             else if (type.Equals("Furniture"))
@@ -120,7 +120,7 @@ namespace SWProjv1
                     case "SWProjv1.Key":
                         TempKey key = new TempKey(
                             reader.GetString(8).Trim() + " " + reader.GetString(9).Trim(),
-                            reader.GetString(0).Trim(),
+                            reader.GetString(23).Trim()+" "+ reader.GetString(20).Trim(),
                             reader.GetString(13).Trim()
                             );
                         key.setListBoxItem();

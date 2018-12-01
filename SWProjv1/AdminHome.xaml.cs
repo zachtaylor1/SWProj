@@ -75,5 +75,10 @@ namespace SWProjv1
         {
             this.NavigationService.Navigate(new SearchPage("Audit"));
         }
+
+        private void roommate_btn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
