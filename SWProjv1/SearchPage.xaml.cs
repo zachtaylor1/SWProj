@@ -134,12 +134,12 @@ namespace SWProjv1
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error, Wrong input" + ex.Message);
+                    MessageBox.Show("Send Message ErrorError, Wrong input\n\n" + ex.Message);
                 }
             }
             else
             {
-                MessageBox.Show("Error, Inputs invalid");
+                MessageBox.Show("SEND CLICK ERROR: Error, Inputs invalid \n\n");
             }
         }
     }

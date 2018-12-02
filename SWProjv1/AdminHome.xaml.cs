@@ -78,7 +78,17 @@ namespace SWProjv1
 
         private void roommate_btn_Click(object sender, RoutedEventArgs e)
         {
-
+            /*DateTime dt = DateTime.Now;
+            int year = dt.Year;
+            if (MessageBox.Show("Are you sure?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            {
+                MessageBox.Show(StudentAssignment.assign(Server.runQueryApplication(year), year));
+            }
+            else
+            {
+                
+            }*/
+            Server.getRoommateName("123");
         }
     }
 }

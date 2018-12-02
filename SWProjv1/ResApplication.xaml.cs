@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+
 namespace SWProjv1
 {
     /// <summary>
@@ -23,6 +24,7 @@ namespace SWProjv1
         {
             InitializeComponent();
         }
+
         private void submit_btn_Click(object sender, RoutedEventArgs e)
         {
 
@@ -40,16 +42,18 @@ namespace SWProjv1
                 if (roomateRequest.Text.Equals("Yes")) roomreq = 1;
                 if (studyInRoom.Text.Equals("Yes")) studies = 1;
                 if (overnightVisitors.Text.Equals("Yes")) visitors = 1;
+
                 Server.Executer("EXEC SubmitApplication '" + stdNum_inp.Text + "', '" + name_inp.Text + "', '" + lname_inp.Text + "', '" + otherName.Text + "', " + schoolYear.Text + ", '" + gender.Text + "', '" + email.Text + "', '" + streetAddress.Text + "', '" + city.Text + "', '" + region.Text + "', '" + country.Text + "', '" + postalCode.Text + "', '" + phoneCountryCode.Text + "', '" + phoneAreaCode.Text + "', '" + phoneNumber.Text + "', '" + preferedBuilding.Text + "', " + smoke + ", " + livewithsmoke + ", " + drink + ", " + livewithdrink + ", " + mary + ", " + livewithmary + ", '" + socialLevel.Text + "', '" + bedtime.Text + "', '" + wakeUp.Text + "', '" + volumeLevel.Text + "', " + visitors + ", '" + cleanliness.Text + "', " + studies + "," + roomreq + ",'" + roomateName.Text + "','" + roomateStudentNum.Text + "','" + mealPlan.Text + "'");
                 mbTitle = "Success!";
                 mbMessage = "Application Successful! :)";
+                MessageBox.Show(mbMessage, mbTitle);
             }
             else
             {
                 mbTitle = "Fail!";
                 mbMessage = "Request Denied\nFill out all fields";
+                MessageBox.Show(mbMessage, mbTitle);
             }
-            MessageBox.Show(mbTitle, mbMessage);
         }
     }
 }

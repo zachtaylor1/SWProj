@@ -73,12 +73,14 @@
     <Compile Include="ResApplication.xaml.cs">
       <DependentUpon>ResApplication.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ResApplicationForm.cs" />
     <Compile Include="Room.cs" />
     <Compile Include="SearchPage.xaml.cs">
       <DependentUpon>SearchPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Server.cs" />
     <Compile Include="Student.cs" />
+    <Compile Include="StudentAssignment.cs" />
     <Compile Include="StudentHome.xaml.cs">
       <DependentUpon>StudentHome.xaml</DependentUpon>
     </Compile>
