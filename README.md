@@ -40,3 +40,5 @@ This Student Housing System allows for the following functions:
 5. Blacklisting and viewing blacklisted students
 6. Tracking the temporary keys and allowing for their assignments
 7. A Message system for users to message each other for arbitrary items
+
+Note: the main project is contained in the SWProjv1 folder. The only required files outside that folder are script.sql and filler. Please ignore the rest.
