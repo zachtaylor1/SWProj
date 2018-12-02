@@ -1,0 +1,30 @@
+﻿<Page x:Class="SWProjv1.AdminHome"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:SWProjv1"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="AdminHome">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <!--DockPanel Name="adminNav"-->
+        <UniformGrid Columns="7">
+            <Button Name="msg_btn" Content="View Messages" Click="msg_btn_Click"/>
+            <Button Name="KeyReview_btn" Content="View Key Requests" Click="KeyReview_btn_Click"/>
+            <Button Name="roomSearch_btn" Content="Search Rooms" Click="roomSearch_btn_Click"/>
+            <Button Name="searchStdnt_btn" Content="Search Students" Click="searchStdnt_btn_Click"/>
+            <Button Name="RAReview_btn" Click="RAReview_btn_Click">
+                <TextBlock Text="Review RA Applications" TextWrapping="Wrap"/>
+            </Button>
+            <Button Name="audit_btn" Content="View Audits" Click="audit_btn_Click"/>
+            <Button Name="roommate_btn" Click="roommate_btn_Click">
+                <TextBlock Text="Assign Roommates" TextWrapping="Wrap"/>
+            </Button>
+        </UniformGrid>
+    </Grid>
+</Page>
