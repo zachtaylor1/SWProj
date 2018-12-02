@@ -41,4 +41,4 @@ This Student Housing System allows for the following functions:
 6. Tracking the temporary keys and allowing for their assignments
 7. A Message system for users to message each other for arbitrary items
 
-Note: the main project is contained in the SWProjv1 folder. The only required files outside that folder are script.sql and filler. Please ignore the rest.
+Note: the main project is contained in the SWProjv1 folder. The other relevant files are in Everything Else. Disregard the other files.
