@@ -14,7 +14,7 @@ namespace SWProjv1
         private static int numUsedDoubles = 0;
         public static int numOfSingles { get; set; } = 60;//Dunn rooms
         private static int numUsedSingles = 0;
-        public static double reqCoefficient { get; set; } //how easy it is to qualify as a potential roommate, 0 is super easy, -1 will be always
+        public static double reqCoefficient { get; set; } = 6;//how easy it is to qualify as a potential roommate, 0 is super easy, -1 will be always
 
         public void dunnRoomEmptied()
         {
@@ -150,6 +150,8 @@ namespace SWProjv1
 
         public static String assign(List<ResApplicationForm> applications, int year)
         {
+            String result = "";
+
             foreach (ResApplicationForm a0 in applications) //matches roommate requests, assigns and removes
                 if (!a0.confirmed && !macKayFull())
                     foreach (ResApplicationForm a1 in applications)
@@ -236,7 +238,7 @@ namespace SWProjv1
                 foreach (ResApplicationForm a0 in newFulfilled)
                     applications.Remove(a0); //remove newFulfilled MacKay applications from List
 
-                //Console.WriteLine("The Dunn has been filled, and the MacKay might also have been filled.");
+                result = "The Dunn has been filled, and the MacKay might also have been filled.";
             }
 
             else if (!dunnFull() && macKayFull()) //move MacKay unmatchables and overflow to Dunn, as many as there is room
@@ -253,13 +255,13 @@ namespace SWProjv1
                         Server.assignRoom(a0.studentID, roomID0);
                     }
                 applications.Clear();
-                //Console.WriteLine("The MacKay has been filled, and the Dunn might also have been filled.");
+                result = "The MacKay has been filled, and the Dunn might also have been filled.";
             }
 
             else if (dunnFull() && macKayFull()) //do nothing
             {
                 applications.Clear();
-                //Console.WriteLine("Both the Dunn and the MacKay have been filled. There may be some students who were not accepted.");
+                result ="Both the Dunn and the MacKay have been filled. There may be some students who were not accepted.";
             }
 
             else //move MacKay unmatchables to Dunn, as many as there is room
@@ -276,11 +278,11 @@ namespace SWProjv1
                         //Console.WriteLine("Cleanup to Dunn: " + a0.studentID);
                     }
                 applications.Clear();
-                //Console.WriteLine("All or most applicants have been placed in their desired residences.");
+                result ="All or most applicants have been placed in their desired residences.";
             }
 
             //Console.Read();
-            return "Successful.";
+            return result;
         }
     }
 }

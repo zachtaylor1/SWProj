@@ -178,9 +178,9 @@ namespace SWProjv1
             red = cmd.ExecuteReader();
             red.Read();
             String[] x = { red.GetString(0), red.GetString(1) };
-            red.Close();
             User.userID = x[0];
             admin.adminID = x[1];
+            red.Close();
             return x;
         }
        
@@ -221,7 +221,7 @@ namespace SWProjv1
 
         public static List<ListBoxItem> getRoomHistory(String roomID)
         {
-            command.CommandText = "SELECT * FROM RoomHistory, Student, User_T WHERE RoomHistory.studentID = Student.studentID AND Student.userID = User_t.userID AND RoomHistory.RoomID = " + roomID;
+            command.CommandText = "SELECT * FROM RoomHistory, Student, User_T WHERE RoomHistory.studentID = Student.studentID AND Student.userID = User_t.userID AND RoomHistory.RoomID = '" + roomID+"'";
             SqlDataReader reader = command.ExecuteReader();
             List<ListBoxItem> ll = new List<ListBoxItem>();
             while (reader.Read())
@@ -251,7 +251,8 @@ namespace SWProjv1
 
         public static String getRoommateName(String roommateID)
         {
-            command.CommandText = "SELECT studentID FROM Student, User_T WHERE Student.UserID = User_T.UserID AND Student.userID= Student.studentID AND Student.studentID = '" + roommateID + "'";
+            command.CommandType = System.Data.CommandType.Text;
+            command.CommandText = "SELECT * FROM Student, User_T WHERE Student.UserID = User_T.UserID AND Student.userID= Student.studentID AND Student.studentID = " + roommateID;
             SqlDataReader reader = command.ExecuteReader();
             String s="";
             while (reader.Read())
@@ -283,7 +284,8 @@ namespace SWProjv1
         private static void setCommandApplication(String type, String parameter) //parameter is schoolYear or applicationID
         {
             if (type.Equals("Application"))
-                command.CommandText = "SELECT * FROM Application, RoomHistory WHERE Application.studentID NOT IN (SELECT studentID FROM RoomHistory WHERE dateEntered > '"+parameter+"') AND Application.studentID = RoomHistory.studentID";
+                command.CommandText = "SELECT * FROM Application WHERE Application.studentID NOT IN " +
+                    "(SELECT studentID FROM RoomHistory WHERE dateEntered > '" + parameter + "')";
             else if (type.Equals("Sport"))
                 command.CommandText = "SELECT * FROM Sport WHERE applicationID = '" + parameter + "'";
             else if (type.Equals("musicType"))
@@ -300,14 +302,14 @@ namespace SWProjv1
             setCommandApplication("Application", schoolString);
 
             List<ResApplicationForm> applications = new List<ResApplicationForm>();
-            MessageBox.Show(command.Connection.ConnectionString);
-            //command.Connection = sql;
+            MessageBox.Show(command.CommandText);
+            command.CommandType = System.Data.CommandType.Text;
             SqlDataReader reader = command.ExecuteReader();
 
             while (reader.Read())
             {
                 ResApplicationForm a0 = new ResApplicationForm();
-                String applicationID = reader.GetString(0).Trim();
+                String applicationID = reader.GetInt32(0).ToString();
                 a0.applicationID = applicationID;
                 a0.studentID = reader.GetString(1).Trim();
                 a0.firstName = reader.GetString(2).Trim();
@@ -380,12 +382,12 @@ namespace SWProjv1
         public static String getEmptyRoomID(String dorm, String year)
         {
             String emptyRooms = "select DISTINCT Room.roomID from Room, RoomHistory where " +
-                "((Room.roomID = RoomHistory.roomID AND RoomHistory.dateLeft IS NOT NULL AND RoomHistory.dateLeft > '"+year+"')" +
-                " OR (Room.roomID NOT IN (SELECT roomID FROM RoomHistory)))AND Room.building = '"+dorm+"'";
+                "(Room.roomID = RoomHistory.roomID AND RoomHistory.dateLeft IS NOT NULL AND RoomHistory.dateLeft > '"+year+"')" +
+                " OR (Room.roomID NOT IN (SELECT roomID FROM RoomHistory)) AND Room.building = '"+dorm+"'";
             command.CommandText = emptyRooms;
 
             int times = 0;
-            String roomID = "";
+            String roomID = "'''";
             SqlDataReader reader = command.ExecuteReader();
             while (reader.Read() && times == 0)
             {
@@ -400,11 +402,11 @@ namespace SWProjv1
         public static String getRoomNum(String dorm, String year)
         {
             String roomID = getEmptyRoomID(dorm, year);
-            String emptyRooms = "select roomNum from Room where roomID = '" + roomID + "'";
+            String emptyRooms = "select buildingLocation from Room where roomID = '" + roomID + "'";
             command.CommandText = emptyRooms;
 
             int times = 0;
-            String roomNum = "";
+            String roomNum = "'''";
             SqlDataReader reader = command.ExecuteReader();
             while (reader.Read() && times == 0)
             {
@@ -418,11 +420,11 @@ namespace SWProjv1
 
         public static String getAdjoiningID(String roomID, String roomNum)
         {
-            String adjoining = "select roomID from Room where roomID != '" + roomID + "' AND roomNum = '" + roomNum + "'";
+            String adjoining = "select roomID from Room where roomID != '" + roomID + "' AND buildingLocation = '" + roomNum + "'";
             command.CommandText = adjoining;
 
             int times = 0;
-            String adRoomID = "";
+            String adRoomID = "'''";
             SqlDataReader reader = command.ExecuteReader();
             while (reader.Read() && times == 0)
             {
@@ -438,10 +440,36 @@ namespace SWProjv1
         {
             DateTime dateTime = DateTime.Now;
             String formatted = dateTime.ToString("yyyy-MM-dd");
-
+            command.CommandType = System.Data.CommandType.Text;
             String insertStmt = "INSERT INTO RoomHistory values ('" + roomID + "', '" + studentID + "', '" + formatted + "', NULL)";
             command.CommandText = insertStmt;
             command.ExecuteNonQuery();
+        }
+
+        public static void Blacklist(String studentID, bool bl)
+        {
+            command.CommandType = System.Data.CommandType.Text;
+            if(bl) command.CommandText = "UPDATE Student SET blacklisted = 1 WHERE studentID = '" + studentID + "'";
+            else command.CommandText = "UPDATE Student SET blacklisted = 0 WHERE studentID = '" + studentID + "'";
+            command.ExecuteNonQuery();
+        }
+
+        public static List<ListBoxItem> getStudentHistory(String studentNum)
+        {
+            command.CommandText = "SELECT * FROM RoomHistory, Room WHERE studentID = '" + studentNum + "'";
+            command.CommandType = System.Data.CommandType.Text;
+            SqlDataReader reader = command.ExecuteReader();
+            List<ListBoxItem> ll = new List<ListBoxItem>();
+            while (reader.Read())
+            {
+                String s = reader.GetString(9).Trim() + reader.GetString(5).Trim() + " " + reader.GetString(6).Trim();
+                s += "  " + reader.GetString(2).Trim() + "   " + reader.GetString(3).Trim();
+                ListBoxItem lb = new ListBoxItem();
+                lb.Content = s;
+                ll.Add(lb);
+            }
+            reader.Close();
+            return ll;
         }
     }
 }
